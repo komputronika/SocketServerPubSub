@@ -48,7 +48,7 @@ Setelah itu, ketiklah seperti ini baris per baris:
     {"action":"sub","topic":"demo"}
     {"action":"pub","topic":"demo","data":"Mantap brooo..."}
 
-Anda akan mendapatkan balasan di halaman telnet seperti ini (karena baru saja subscribe pada topik 'demo'.
+Anda akan mendapatkan balasan di halaman telnet seperti ini (karena baru saja subscribe pada topik 'demo').
 
     {"data":"Mantap brooo..."}
     
