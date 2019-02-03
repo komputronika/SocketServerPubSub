@@ -73,7 +73,7 @@ while(true)
 		{
 			// Ini informasi IP and port client tersebut
 			echo 'Koneksi baru dari ' . stream_socket_get_name($new_client, true) . "\n";
-			
+
 			// Tambahkan ke data client yang aktif
 			$client_socks[] = $new_client;
 
@@ -101,6 +101,8 @@ while(true)
 			// Tampilkan informasi
 			echo "Sebuah client terputus, jumlah sekarang: ". count($client_socks) . " client.\n";
 
+			// Disini harus hapus dari daftar subcriber
+
     		// Lanjutkan ke client berikutnya
 			continue;
 
@@ -109,7 +111,44 @@ while(true)
 
 			// Ubah data JSON dari client menjadi array
 			$client_info = stream_socket_get_name($sock,true);
-			echo "Data masuk dari $client_info: $data";
+			
+			//echo "Data masuk dari $client_info: $data";
+			//echo "Data masuk dari $client_info: ".unmask($data);
+			echo "Data masuk dari $client_info\n";
+
+			// Bila koneksi datang dari WebSocket 
+			if (strpos($data, "HTTP")!==false ) {
+
+				// Baca data header
+				preg_match('#Sec-WebSocket-Key: (.*)\r\n#', $data, $matches);
+				$key = base64_encode(pack(
+				    'H*',
+				    sha1($matches[1] . '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')
+				));
+
+				// Buat response handshaking untuk browser
+				$headers = "HTTP/1.1 101 Switching Protocols\r\n";
+				$headers.= "Upgrade: websocket\r\n";
+				$headers.= "Connection: Upgrade\r\n";
+				$headers.= "Sec-WebSocket-Version: 13\r\n";
+				$headers.= "Sec-WebSocket-Accept: $key\r\n\r\n";
+
+				// Kirim response handshaking ke browser
+				fwrite($sock,$headers);
+
+				// Ini adalah topic yang disubscribe
+				// Format url => ws://host:port/topic
+				// Misal => ws://127.0.0.1/demo
+
+				// Temukan nama topic dari header
+				preg_match('/GET \/(\w*)/', $data, $found);
+				$topic = $found[1];
+
+				// Karena ini adalah WebSocket, tentukan jenisnya adalah 'web'
+				$client_data = array( "type" => "web" , "socket" => $sock, "info" => $client_info );
+				$subscriber["$topic"][] = $client_data;
+
+			}
 
 			// Ubah string data menjadi JSON
 			$json = (array) @json_decode($data);
@@ -126,7 +165,7 @@ while(true)
 					if (!empty($json["topic"]))
 					{
 						$topic = $json["topic"];
-						$client_data = array( "socket" => $sock, "info" => $client_info );
+						$client_data = array( "type" => "tcp", "socket" => $sock, "info" => $client_info );
 						$subscriber["$topic"][] = $client_data;
 						echo "Subscriber baru pada topik <".strtoupper($topic).">\n";
 
@@ -204,8 +243,41 @@ function publish($sockets, $topic, $data) {
 	$n = 0;
 	foreach($sockets["$topic"] as $sock) {
 		// Tulis data JSON ke resource socket 
-		fwrite($sock["socket"], $data);
+		if ($sock["type"]=="tcp") {
+			// Untuk socket normal, tidak ada header apapun
+            $response = $data;
+	    } else {
+	    	// Untuk WebSocket, ada header
+			$response = chr(129) . chr(strlen($data)) . $data;
+	    }
+
+	    // Kirim data ke client
+        @fwrite($sock["socket"], $response);
+
 		$n++;
 	}
 	echo "Selesai mengirim publish pada topik <".strtoupper($topic)."> ke $n subscriber\n";
+}
+
+function unmask($payload) {
+	$length = ord($payload[1]) & 127;
+
+	if($length == 126) {
+		$masks = substr($payload, 4, 4);
+		$data = substr($payload, 8);
+	}
+	elseif($length == 127) {
+		$masks = substr($payload, 10, 4);
+		$data = substr($payload, 14);
+	}
+	else {
+		$masks = substr($payload, 2, 4);
+		$data = substr($payload, 6);
+	}
+
+	$text = '';
+	for ($i = 0; $i < strlen($data); ++$i) {
+		$text .= $data[$i] ^ $masks[$i%4];
+	}
+	return $text;
 }

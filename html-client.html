@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script type="text/javascript">
+    function WebSocketTest() {
+            
+        var log = document.getElementById('log');   
+        var content = document.getElementById('content');
+
+        if ("WebSocket" in window) {
+
+            log.innerHTML = log.innerHTML + "WebSocket didukung oleh browser <br>";
+           
+            // Buat koneksi ke server, subscribe pada topic 'demo'
+            var ws = new WebSocket("ws://127.0.0.1:4444/demo");
+
+            // Apabila ada data masuk, tampilkan pada div
+            ws.onmessage = function(e) {
+                log.innerHTML = log.innerHTML + "Data masuk <br>";  
+                content.innerHTML = content.innerHTML + e.data + "<br>";
+            };
+            
+            ws.onopen = function() {
+                // Coba kirim data
+                // ws.send('{"action":"sub","topic":"demo","source":"browser"}');
+                // log.innerHTML = "Data terkirim";
+            };
+            
+            ws.onclose = function() { 
+                // WebSocket terputus
+                log.innerHTML = log.innerHTML + "Koneksi terputus...<br>"; 
+            };
+
+        } else {
+          
+           log.innerHTML = log.innerHTML + "WebSocket tidak didukung oleh browser<br>";
+        }
+    }
+    </script>
+
+    <style>
+    * {
+            font-family: arial, sans-serif;
+            font-size: 18px;
+    }
+    #content {
+        padding: 20px;
+        background-color: #eee;
+    }
+    #log {
+        margin-top:20px;
+        padding: 20px;
+        background-color: #fafafa;
+    }
+    body {
+        margin: 30px;
+    }
+    </style>
+
+</head>
+
+<body onload="WebSocketTest()">
+    <h5>Data dari publish server akan muncul disini:</h5>
+    <div id="content"></div>
+    <div id="log"></div>
+</body>
+
+</html>

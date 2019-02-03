@@ -70,3 +70,9 @@ Log di atas memudahkan kita melakukan debug pada script dan lalu-lintas data.
 ## Pengembangan
 Script ini sedang dikembangkan, tutorial pada blog segera menyusul. Bila menemukan error atau ada usulan, silahkan kirimkan Issue. Bila ingin membantu pengembangan silahkan Pull Request.
 
+## Todo
+1. Handshaking pada WebSocket, decode data yang dikirim dari browser
+2. Contoh sketch untuk Arduino, ESP8266 (NodeMCU, dsb)
+3. Contoh program dengan Python, NodeJS, C/C++, Android
+4. Menghapus client yang sudah terputus dari daftar subscriber  
+5. Penerapan security?
