@@ -9,15 +9,18 @@ Mudah dipelajari, mudah dikembangkan, lalu-lintas data lebih kecil dibandingkan 
 ## Format Data
 
 #### Subscribe
+Kirimkan string seperti di bawah ini untuk melakukan subscribe pada sebuah topik.
 	{"action":"sub", "topic":"nama_topic"}
 
 #### Publish
+Kirimkan string seperti di bawah ini untuk mem-publish data baru ke subscriber. 
 	{"action":"pub", "topic":"nama_topic", "data": "teks data"}
 	
 	// atau
 	
 	{"action":"pub", "topic":"nama_topic", "data": {"var1":val1, "var2":val2, ...} }
 #### Data dari Server	
+Ini adalah format data yang akan diterima oleh client pada saat ada publish baru pada topik yang diikuti.
 	{"data": "teks data"}
 	
 	// atau
