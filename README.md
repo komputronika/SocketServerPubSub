@@ -12,30 +12,30 @@ Sudah mendukung WebSocket, sehingga client bisa subscribe dan publish secara rea
 
 #### Subscribe
 Kirimkan string seperti di bawah ini untuk melakukan subscribe pada sebuah topik.
-	
-	{"action":"sub", "topic":"nama_topic"}
+    
+    {"action":"sub", "topic":"nama_topic"}
 
 #### Publish
 Kirimkan string seperti di bawah ini untuk mem-publish data baru ke subscriber. 
 
-	{"action":"pub", "topic":"nama_topic", "data": "teks data"}
-	
-	// atau
-	
-	{"action":"pub", "topic":"nama_topic", "data": {"var1":val1, "var2":val2, ...} }
-#### Data dari Server	
+    {"action":"pub", "topic":"nama_topic", "data": "teks data"}
+    
+    // atau
+    
+    {"action":"pub", "topic":"nama_topic", "data": {"var1":val1, "var2":val2, ...} }
+#### Data dari Server   
 Ini adalah format data yang akan diterima oleh client pada saat ada publish baru pada topik yang diikuti.
 
-        {"data": "teks data"}
-	
-	// atau
-	
-	{"data": {"var1":val1, "var2":val2, ...} }	
+    {"data": "teks data"}
+    
+    // atau
+    
+    {"data": {"var1":val1, "var2":val2, ...} }  
 
 ## Cara Menjalankan Server
 Anda memerlukan PHP untuk menjalakan script ini. Ketik seperti ini pada terminal anda.
 
-    php socket-server
+    php socket-server.php
 
 ## Menghubungkan Client Terhubung
 Untuk mengetes socket server ini, silahkan jalankan telnet pada windows/tab terminal terpisah:
@@ -47,12 +47,12 @@ Untuk mengetes socket server ini, silahkan jalankan telnet pada windows/tab term
 
 Setelah itu, ketiklah seperti ini baris per baris:
 
-    {"action":"sub","topic":"demo"}
-    {"action":"pub","topic":"demo","data":"Mantap brooo..."}
+    {"action":"sub","topic":"relay"}
+    {"action":"pub","topic":"relay","data":"on"}
 
-Anda akan mendapatkan balasan di halaman telnet seperti ini (karena baru saja subscribe pada topik 'demo').
+Anda akan mendapatkan balasan di halaman telnet seperti ini (karena baru saja subscribe pada topik 'relay').
 
-    {"data":"Mantap brooo..."}
+    {"data":"on"}
     
 ## Monitoring Pada Server
 Pada terminal server akan dilihat log sebagai berikut:
@@ -79,15 +79,19 @@ Untuk menjalankan script secara background, silahkan buka terminal server dan ke
 
     nohup php socket-server.php &
 
-Dengan `nohup`, server akan menjalankan script php tersebut secara background, script tidak akan stop walaupun sudah logout dari terminal. 
+Dengan `nohup`, server akan menjalankan script php tersebut secara background, script tidak akan stop walaupun user sudah logout dari terminal. 
 
 ## Pengembangan
 Script ini sedang dikembangkan, tutorial pada blog segera menyusul. Bila menemukan error atau ada usulan, silahkan kirimkan Issue. Bila ingin membantu pengembangan silahkan Pull Request.
 
 ## Todo
 1. Handshaking pada WebSocket, decode data yang dikirim dari browser (**beres**)
-2. Contoh sketch untuk Arduino, ESP8266 (NodeMCU, dsb) (**beres**)
-3. Contoh program dengan Python, NodeJS, C/C++, Android
-4. Menghapus client yang sudah terputus dari daftar subscriber  
-5. Memproses string dari client yang dipisahkan \n 
-6. Penerapan security?
+2. Contoh sketch untuk Arduino, ESP8266 (NodeMCU) (**beres**)
+3. Menghapus client yang sudah terputus dari daftar subscriber (**beres**) 
+4. Memproses data string dari client yang dipisahkan \n 
+5. Contoh program dengan Python
+6. Contoh program dengan NodeJS
+7. Contoh program dengan C/C++
+8. Contoh program dengan Android
+9. Contoh aplikasi praktis dengan App, Relay, Web
+10. Security?

@@ -49,9 +49,9 @@ while(true)
     // Variable parameter, tidak digunakan isi dengan null
     $write = null;
     $except = null;
-    
+
     // Mulai membaca lalu-lintas, gunakan timeout yang besar
-    if ( !stream_select( $read_socks, $write, $except, 200000) )
+    if ( !stream_select( $read_socks, $write, $except, 300000) )
     {
         // Tidak ada lalu-lintas, ulangi ke awal
         continue;
@@ -73,7 +73,7 @@ while(true)
             $client_socks[] = $new_client;
 
             // Tampilkan informasi jumlah client yang aktif
-            echo "Jumlah client saat ini: ". count($client_socks). " client.\n";
+            // echo "Jumlah client saat ini: ". count($client_socks). " client.\n";
         }
         
         // Hapus socket server dari daftar baca
@@ -99,8 +99,6 @@ while(true)
             // Tampilkan informasi
             echo "Sebuah client terputus, jumlah sekarang: ". count($client_socks) . " client.\n";
 
-            // Disini harus hapus dari daftar subcriber
-
             // Lanjutkan ke client berikutnya
             continue;
 
@@ -110,7 +108,6 @@ while(true)
             // Ubah data JSON dari client menjadi array
             $client_info = stream_socket_get_name($sock,true);
             
-            //echo "Data masuk dari $client_info: $data";
             //echo "Data masuk dari $client_info: ".$data;
             echo "Data masuk dari $client_info\n";
 
@@ -136,7 +133,8 @@ while(true)
 
             } else {
 
-                // Asumsi bila awalan data bukan '{', bukan JSON, maka itu adalah data encoded dari websocket
+                // Asumsi bila awalan data bukan '{', bukan JSON, 
+                // maka itu adalah data encoded dari websocket
                 if (strpos($data,"{")===false) {
                     // Decode data websocket dari client
                     $data = decode($data);
@@ -147,7 +145,7 @@ while(true)
 
             // Ubah string data menjadi JSON
             $json = (array) @json_decode($data);
-            print_r($json);
+            //print_r($json);
 
             // Periksa apakah hasil decode benar dan menjadi array
             if (count($json)) 
@@ -172,11 +170,7 @@ while(true)
                         $n = 1;
                         // Loop pada semua subscriber, semua topic
                         foreach($subscriber as $topic => $sub) {
-                            // Loop pada semua subscriber, topic ini
-                            /*foreach ($sub as $s) {
-                                echo "$n) $topic => ".$s["info"]."\n";
-                                $n++;
-                            }*/
+                            // Tampilkan jumlah subscriber
                             echo "$n) $topic => ".count($sub)." client\n";
                         }
 
@@ -188,10 +182,11 @@ while(true)
 
                 // Contoh string data publish dari client:
                 // Data 1 dimensi =>  {"action":"pub", "topic":"relay", "data": "Hello World"}
-                // Data berdimensi banyak => {"action":"pub", "topic":"kebunku", "data": { "suhu":38, "kelembaban":60 } }
+                // Data berdimensi banyak => {"action":"pub", "topic":"kebunku", "data": 
+                //                           { "suhu":38, "kelembaban":60 } }
 
                 // Bila action adalah 'pub', publish data ke semua client yang subscribe
-                if ($json["action"] == "pub") {
+                if (@$json["action"] == "pub") {
 
                     if (!empty($json["topic"]))
                     {
@@ -203,7 +198,7 @@ while(true)
 
                         // Publish ke semua subscriber dalam string JSON
                         echo "Publish baru pada topik <".strtoupper($topic).">\n";
-                        publish($subscriber, $topic, json_encode($broadcast_data)."\n" );
+                        $subscriber = publish($subscriber, $topic, json_encode($broadcast_data)."\n" );
                     
                     } else {
 
@@ -233,11 +228,14 @@ socket_close($server);
  *
  * @param  array  $socket Daftar scubsriber  
  * @param  string $topic  Topik yang akan kirim
- * @return void 
+ * @return array  Subscriber 
  */
 function publish($sockets, $topic, $data) {
     // Untuk semua element pada variable $socket
+    if (@count($sockets["$topic"])<1) return;
+
     $n = 0;
+    $s = 0;
     foreach($sockets["$topic"] as $sock) {
         // Tulis data JSON ke resource socket 
         if ($sock["type"]=="tcp") {
@@ -250,11 +248,22 @@ function publish($sockets, $topic, $data) {
         }
 
         // Kirim data ke client
-        @fwrite($sock["socket"], $response);
+        $status = @fwrite($sock["socket"], $response);
 
+        // Bila gagal mengirim data ke client ini
+        if ($status === false) {
+            // Hapus client dari daftar subscriber
+            unset($sockets["$topic"][$n]);
+        } else { 
+            // Hitung jumlah real yang terkirim
+            $s++; 
+        }
         $n++;
     }
-    echo "Selesai mengirim publish pada topik <".strtoupper($topic)."> ke $n subscriber\n";
+    echo "Selesai mengirim publish pada topik <".strtoupper($topic)."> ke $s subscriber\n";
+
+    // Return array subscriber yang sudah dibersihkan
+    return $sockets;
 }
 
 /**
@@ -283,6 +292,7 @@ function decode($data){
     for($i=0;$i<strlen($coded_data);$i++){
         $decoded_data .= $coded_data[$i] ^ $mask[$i%4];
     }
+
     return $decoded_data;
 }
 
