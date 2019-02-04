@@ -4,7 +4,9 @@ Sebuah contoh script sederhana membuat socket server dengan metode publish dan s
 
 Format data yang digunakan adalah JSON dan bisa digunakan untuk IoT misalnya dengan Arduino dan board yang menggunakan chip ESP8266 dan sebagainya.
 
-Mudah dipelajari, mudah dikembangkan, lalu-lintas data lebih kecil dibandingkan menggunakan WebSocket atau protokol HTTP karena data yang dikirimkan berupa JSON murni tanpa header apapun.
+Mudah dipelajari, mudah dikembangkan, lalu-lintas data lebih kecil dibandingkan menggunakan protokol HTTP karena data yang dikirimkan berupa JSON murni tanpa header.
+
+Sudah mendukung WebSocket, sehingga client bisa subscribe dan publish secara realtime melalui web browser / Javascript.
 
 ## Format Data
 
@@ -83,7 +85,7 @@ Dengan `nohup`, server akan menjalankan script php tersebut secara background, s
 Script ini sedang dikembangkan, tutorial pada blog segera menyusul. Bila menemukan error atau ada usulan, silahkan kirimkan Issue. Bila ingin membantu pengembangan silahkan Pull Request.
 
 ## Todo
-1. Handshaking pada WebSocket, decode data yang dikirim dari browser
+1. Handshaking pada WebSocket, decode data yang dikirim dari browser (**beres**)
 2. Contoh sketch untuk Arduino, ESP8266 (NodeMCU, dsb)
 3. Contoh program dengan Python, NodeJS, C/C++, Android
 4. Menghapus client yang sudah terputus dari daftar subscriber  

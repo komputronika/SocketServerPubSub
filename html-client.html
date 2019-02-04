@@ -12,7 +12,7 @@
             log.innerHTML = log.innerHTML + "WebSocket didukung oleh browser <br>";
            
             // Buat koneksi ke server, subscribe pada topic 'demo'
-            var ws = new WebSocket("ws://127.0.0.1:4444/demo");
+            var ws = new WebSocket("ws://127.0.0.1:4444");
 
             // Apabila ada data masuk, tampilkan pada div
             ws.onmessage = function(e) {
@@ -22,8 +22,8 @@
             
             ws.onopen = function() {
                 // Coba kirim data
-                // ws.send('{"action":"sub","topic":"demo","source":"browser"}');
-                // log.innerHTML = "Data terkirim";
+                ws.send('{"action":"sub","topic":"demo","source":"browser"}');
+                log.innerHTML = log.innerHTML + "Data terkirim<br>";
             };
             
             ws.onclose = function() { 
