@@ -86,7 +86,7 @@ Script ini sedang dikembangkan, tutorial pada blog segera menyusul. Bila menemuk
 
 ## Todo
 1. Handshaking pada WebSocket, decode data yang dikirim dari browser (**beres**)
-2. Contoh sketch untuk Arduino, ESP8266 (NodeMCU, dsb)
+2. Contoh sketch untuk Arduino, ESP8266 (NodeMCU, dsb) (**beres**)
 3. Contoh program dengan Python, NodeJS, C/C++, Android
 4. Menghapus client yang sudah terputus dari daftar subscriber  
 5. Memproses string dari client yang dipisahkan \n 
