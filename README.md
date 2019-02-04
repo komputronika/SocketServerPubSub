@@ -75,4 +75,5 @@ Script ini sedang dikembangkan, tutorial pada blog segera menyusul. Bila menemuk
 2. Contoh sketch untuk Arduino, ESP8266 (NodeMCU, dsb)
 3. Contoh program dengan Python, NodeJS, C/C++, Android
 4. Menghapus client yang sudah terputus dari daftar subscriber  
-5. Penerapan security?
+5. Memproses string dari client yang dipisahkan \n 
+6. Penerapan security?
