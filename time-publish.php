@@ -24,8 +24,8 @@ while (true) {
 		        }
 		    }
 		}
+		// Jeda sebentar, lalu ulang lagi untuk konek / loop while(true)
+		sleep(5);
 	}
-	// Jeda sebentar, lalu ulang lagi untuk konek / loop while(true)
-	sleep(10);
 }
 ?>
