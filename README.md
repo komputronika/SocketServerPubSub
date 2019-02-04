@@ -67,6 +67,18 @@ Pada terminal server akan dilihat log sebagai berikut:
     
 Log di atas memudahkan kita melakukan debug pada script dan lalu-lintas data.
 
+## Menjalankan Script di Server 
+Bila ingin membuat server socket ini menjadi online dan dapat diakses secara publik, 
+maka perlu sebuah server di rumah/kantor yang online, atau dengan menyewa sebuah VPS.
+
+Rekomendasi VPS: [Vultr.com](https://www.vultr.com/?ref=7830794-4F)
+
+Untuk menjalankan script secara background, silahkan buka terminal server dan ketik perintah sebagai berikut:
+
+    nohup php socket-server.php &
+
+Dengan `nohup`, server akan menjalankan script php tersebut secara background, script tidak akan stop walaupun sudah logout dari terminal. 
+
 ## Pengembangan
 Script ini sedang dikembangkan, tutorial pada blog segera menyusul. Bila menemukan error atau ada usulan, silahkan kirimkan Issue. Bila ingin membantu pengembangan silahkan Pull Request.
 
