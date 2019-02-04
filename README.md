@@ -71,7 +71,7 @@ Log di atas memudahkan kita melakukan debug pada script dan lalu-lintas data.
 Bila ingin membuat server socket ini menjadi online dan dapat diakses secara publik, 
 maka perlu sebuah server di rumah/kantor yang online, atau dengan menyewa sebuah VPS.
 
-Rekomendasi VPS: [Vultr.com](https://www.vultr.com/?ref=7830794-4F)
+Rekomendasi VPS: [DigitalOcean](https://m.do.co/c/2fa14040d118), [Vultr](https://www.vultr.com/?ref=7830794-4F)
 
 Untuk menjalankan script secara background, silahkan buka terminal server dan ketik perintah sebagai berikut:
 
