@@ -107,7 +107,7 @@ while(true)
 
             // Ubah data JSON dari client menjadi array
             $client_info = stream_socket_get_name($sock,true);
-            
+
             //echo "Data masuk dari $client_info: ".$data;
             echo "Data masuk dari $client_info\n";
 
