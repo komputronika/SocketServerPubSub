@@ -8,6 +8,10 @@ Mudah dipelajari, mudah dikembangkan, lalu-lintas data lebih kecil dibandingkan 
 
 Sudah mendukung WebSocket, sehingga client bisa subscribe dan publish secara realtime melalui web browser / Javascript.
 
+<img src="http://i63.tinypic.com/nzovfs.png"
+     alt="JSON Socket Server"
+     style="width:100%" />
+
 ## Format Data
 
 #### Subscribe
@@ -85,13 +89,13 @@ Tutorial pada blog segera menyusul. Bila menemukan error atau ada usulan, silahk
 
 ## Todo
 1. Handshaking pada WebSocket, decode data yang dikirim dari browser (**beres**)
-2. Contoh sketch untuk Arduino, ESP8266 (NodeMCU) (**beres**)
-3. Menghapus client yang sudah terputus dari daftar subscriber (**beres**) 
-4. Memproses multi-line string JSON dari client (yang dipisahkan \n) (**beres**)
+2. Menghapus client yang sudah terputus dari daftar subscriber (**beres**) 
+3. Memproses multi-line string JSON dari client (yang dipisahkan \n) (**beres**)
+4. Contoh sketch untuk Arduino, ESP8266 (NodeMCU) (**beres**)
 5. Client test dengan PHP (**beres**)
 6. Client test dengan Python (**beres**)
 7. Client test dengan NodeJS (**beres**)
-8. Client test dengan C/C++
+8. Client test dengan C/C++ (-- mencari library JSON untuk C)
 9. Client test dengan Android
 10. Contoh aplikasi nyata dengan Relay, Android App, Website
 11. Security?
