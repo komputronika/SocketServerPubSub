@@ -14,9 +14,10 @@
  */
 
 // Konfigurasi
-$config["verbose"] = true; 
-$config["host"]    = "0.0.0.0"; 
-$config["port"]    = "4444"; 
+$config["verbose"]     = true; 
+$config["host"]        = "0.0.0.0"; 
+$config["port"]        = "4444"; 
+$config["buffer_size"] = 2048; 
 
 echo "JSON Socket Server\n";
 
@@ -86,7 +87,7 @@ while(true)
         $type = "tcp";
 
         // Baca data dari client
-        $data = fread($sock, 1024);
+        $data = fread($sock, $config["buffer_size"]);
         
         // Bila tidak ada data masuk
         if( empty($data) )
