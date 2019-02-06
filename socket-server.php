@@ -1,8 +1,8 @@
 <?php
 /**
- * Socket Server Publish And Subscribe Dengan Format JSON
+ * JSON Socket Server - Publish And Subscribe
  *
- * Sebuah contoh socket server yang menerapkan metode
+ * Sebuah socket server yang menerapkan metode
  * subscribe dan publish menggunakan format data JSON.
  *
  * Terinspirasi dari MQTT, namun lebih sederhana.
@@ -14,9 +14,10 @@
  */
 
 // Konfigurasi
-$config["verbose"] = true; 
-$config["host"]    = "0.0.0.0"; 
-$config["port"]    = "4444"; 
+$config["verbose"]     = true; 
+$config["host"]        = "0.0.0.0"; 
+$config["port"]        = "4444"; 
+$config["buffer_size"] = 2048; 
 
 echo "JSON Socket Server\n";
 
@@ -33,17 +34,6 @@ if ($server === false)
 }
 
 // Variable untuk menyimpan semua data subscriber
-// Format array nya adalah:
-// $subscriber['topic1'][ 
-//                         client1,
-//                         client2,
-//                         ... 
-//                         ]
-// $subscriber['topic2'][ 
-//                         client11,
-//                         client22,
-//                         ... 
-//                      ]
 $subscriber = array();
 
 // Variable untuk menyimpan data client yang terkoneksi
@@ -96,8 +86,8 @@ while(true)
         // Default jenis socket adalah tcp
         $type = "tcp";
 
-        // Baca data dari client
-        $data = fread($sock, 1024);
+        // Baca data dari client, trim untuk hapus white-space tidak perlu
+        $data = trim ( fread($sock, $config["buffer_size"]), " \t\r\0\x0B" );
         
         // Bila tidak ada data masuk
         if( empty($data) )
@@ -268,7 +258,6 @@ function publish($sockets, $topic, $data, &$sent) {
             $response = $data;
         } else {
             // Untuk WebSocket, ada header
-            //$response = chr(129) . chr(strlen($data)) . $data;
             $response = encode($data);
         }
 
