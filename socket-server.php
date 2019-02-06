@@ -28,7 +28,8 @@ if ($server === false)
 {
     die("Tidak dapat membuat socket. Error [$errno]: $errorMessage");
 } else {
-    echo "Aktif pada IP:".$config["host"].", port:".$config["port"]."\n";
+    //echo "Aktif pada IP:".$config["host"].", port:".$config["port"]."\n";
+    echo "Aktif pada IP: ".file_get_contents("http://ipecho.net/plain").", port: ".$config["port"]."\n";
 }
 
 // Variable untuk menyimpan semua data subscriber
