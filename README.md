@@ -95,8 +95,8 @@ Tutorial pada blog segera menyusul. Bila menemukan error atau ada usulan, silahk
 5. Client test dengan PHP (**beres**)
 6. Client test dengan Python (**beres**)
 7. Client test dengan NodeJS (**beres**)
-8. Client test dengan C/C++ - Pakai library cJSON 
-9. Client test dengan Android
+8. Client test dengan Android (**beres**)
+9. Client test dengan C/C++ - Pakai library cJSON 
 10. Contoh aplikasi nyata dengan Relay, Android App, Website
 11. Membuat tutorial di blog
 13. Membuat video demo
