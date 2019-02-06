@@ -87,7 +87,7 @@ Tutorial pada blog segera menyusul. Bila menemukan error atau ada usulan, silahk
 1. Handshaking pada WebSocket, decode data yang dikirim dari browser (**beres**)
 2. Contoh sketch untuk Arduino, ESP8266 (NodeMCU) (**beres**)
 3. Menghapus client yang sudah terputus dari daftar subscriber (**beres**) 
-4. Memproses data string dari client yang dipisahkan \n (**beres**)
+4. Memproses multi-line string JSON dari client (yang dipisahkan \n) (**beres**)
 5. Client test dengan PHP (**beres**)
 6. Client test dengan Python (**beres**)
 7. Client test dengan NodeJS (**beres**)
