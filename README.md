@@ -90,8 +90,8 @@ Tutorial pada blog segera menyusul. Bila menemukan error atau ada usulan, silahk
 4. Memproses data string dari client yang dipisahkan \n (**beres**)
 5. Client test dengan PHP (**beres**)
 6. Client test dengan Python (**beres**)
-7. Client test dengan NodeJS
+7. Client test dengan NodeJS (**beres**)
 8. Client test dengan C/C++
 9. Client test dengan Android
-10. Contoh aplikasi praktis dengan App, Relay, Web
+10. Contoh aplikasi nyata dengan Relay, Android App, Website
 11. Security?
