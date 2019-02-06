@@ -86,8 +86,8 @@ while(true)
         // Default jenis socket adalah tcp
         $type = "tcp";
 
-        // Baca data dari client
-        $data = fread($sock, $config["buffer_size"]);
+        // Baca data dari client, trim untuk hapus white-space tidak perlu
+        $data = trim ( fread($sock, $config["buffer_size"]), " \t\r\0\x0B" );
         
         // Bila tidak ada data masuk
         if( empty($data) )
