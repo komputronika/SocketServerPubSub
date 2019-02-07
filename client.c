@@ -4,6 +4,9 @@
 #include <netinet/in.h> 
 #include <string.h> 
 
+// https://github.com/DaveGamble/cJSON
+#include "cJSON.h"
+
 #define ADDR "127.0.0.1" 
 #define PORT 4444 
 
@@ -42,8 +45,16 @@ int main(int argc, char const *argv[])
     send(sock , json , strlen(json) , 0 ); 
     printf("Mengirim data ke server:\n%s\n", json); 
     
-    data = read( sock , buffer, 2048); 
-    printf("Balasan dari server:\n",buffer ); 
-    printf("%s\n",buffer ); 
+    data = read(sock , buffer, 2048); 
+
+    // Parsing JSON disini (dengan cJSON)
+    cJSON *root = cJSON_Parse(buffer);
+    char *str = cJSON_GetObjectItem(root, "data")->valuestring;
+
+    printf("Data dari server: %s\n", str ); 
+
+    // Hapus memory cJSON
+    cJSON_Delete(root);
+
     return 0; 
 } 
