@@ -41,7 +41,7 @@ Anda memerlukan PHP untuk menjalakan script ini. Ketik seperti ini pada terminal
 
     php socket-server.php
 
-## Menghubungkan Client Terhubung
+## Menghubungkan Client ke Server
 Untuk mengetes socket server ini, silahkan jalankan telnet pada windows/tab terminal terpisah:
 
     telnet 127.0.0.1 4444
@@ -51,9 +51,12 @@ Setelah itu, ketiklah seperti ini baris per baris:
     {"action":"sub","topic":"relay"}
     {"action":"pub","topic":"relay","data":"on"}
 
-Anda akan mendapatkan balasan di halaman telnet seperti ini (karena baru saja subscribe pada topik 'relay'):
+Bila koneksi berhasil, anda akan mendapatkan balasan di halaman telnet seperti ini (karena baru saja subscribe pada topik 'relay'):
 
     {"data":"on"}
+
+## Contoh Program Client
+Pada repo ini sudah juga sudah disertakan contoh-contoh program client dengan PHP, Python, NodeJS, C, Arduino, App Inventor. Contoh client dibuat sederhana agar potongan-potongan kode client tersebut mudah disisipkan pada proyek utama anda. 
     
 ## Monitoring Pada Server
 Pada terminal server akan dilihat log sebagai berikut:
@@ -70,13 +73,17 @@ Pada terminal server akan dilihat log sebagai berikut:
     2019-02-06 08:25:06 Selesai mengirim publish pada topik <relay> ke 1 subscriber
     2019-02-06 08:25:06 Sebuah client terputus, jumlah sekarang: 0 client
     
-Log di atas memudahkan kita melakukan debug pada script dan lalu-lintas data.
+Log di atas memudahkan kita melakukan debug pada script dan untuk melihat lalu-lintas data.
+
+Bila tidak ingin menampilkan log, atur konfigurasi seperti ini:
+
+    $config["verbose"] = false;
 
 ## Menjalankan Script di Server 
 Bila ingin membuat server socket ini menjadi online dan dapat diakses secara publik, 
 maka perlu sebuah server di rumah/kantor yang selalu online, atau dengan menyewa sebuah VPS.
 
-Rekomendasi VPS: [DigitalOcean](https://m.do.co/c/2fa14040d118), [Vultr](https://www.vultr.com/?ref=7830794-4F)
+Rekomendasi VPS: [DigitalOcean](https://m.do.co/c/2fa14040d118), [Vultr](https://www.vultr.com/?ref=7830794-4F), [Time4VPS](https://www.time4vps.com/?affid=1643)
 
 Untuk menjalankan script secara background, silahkan buka terminal server dan ketik perintah sebagai berikut:
 
@@ -85,7 +92,7 @@ Untuk menjalankan script secara background, silahkan buka terminal server dan ke
 Dengan `nohup`, server akan menjalankan script php tersebut secara background, script tidak akan stop walaupun user sudah logout dari terminal. 
 
 ## Pengembangan
-Tutorial pada blog segera menyusul. Bila menemukan error atau ada usulan, silahkan kirimkan Issue. Bila ingin berkontribusi silahkan fork, modifikasi dan Pull Request.
+Bila menemukan error atau ada usulan, silahkan kirimkan Issue. Bila ingin berkontribusi silahkan fork, modifikasi dan buat Pull Request.
 
 ## Todo
 1. Handshaking pada WebSocket, decode data yang dikirim dari browser (**beres**)
@@ -96,7 +103,7 @@ Tutorial pada blog segera menyusul. Bila menemukan error atau ada usulan, silahk
 6. Client test dengan Python (**beres**)
 7. Client test dengan NodeJS (**beres**)
 8. Client test dengan Android (**beres**)
-9. Client test dengan C/C++ - Pakai library cJSON 
+9. Client test dengan C/C++ - Pakai library cJSON (**beres**)
 10. Contoh aplikasi nyata dengan Relay, Android App, Website
 11. Membuat tutorial di blog
 13. Membuat video demo
