@@ -94,7 +94,7 @@ Untuk menjalankan script secara background, silahkan buka terminal server dan ke
 Dengan `nohup`, server akan menjalankan script php tersebut secara background, script tidak akan stop walaupun user sudah logout dari terminal. 
 
 ## Pengembangan
-Bila menemukan error atau ada usulan, silahkan kirimkan Issue. Bila ingin berkontribusi silahkan fork, modifikasi dan buat Pull Request.
+Bila menemukan error atau ada usulan, silahkan kirimkan Issue. Bila ingin berkontribusi silahkan fork, modifikasi dan buat Pull Request. Baca juga: [Gihub Workflow](https://www.petanikode.com/github-workflow/) (Bahasa Indonesia)
 
 ## Todo
 1. Handshaking pada WebSocket, decode data yang dikirim dari browser (**beres**)
