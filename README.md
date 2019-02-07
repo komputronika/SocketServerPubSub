@@ -83,7 +83,9 @@ Bila tidak ingin menampilkan log, atur konfigurasi seperti ini:
 Bila ingin membuat server socket ini menjadi online dan dapat diakses secara publik, 
 maka perlu sebuah server di rumah/kantor yang selalu online, atau dengan menyewa sebuah VPS.
 
-Rekomendasi VPS: [DigitalOcean](https://m.do.co/c/2fa14040d118), [Vultr](https://www.vultr.com/?ref=7830794-4F), [Time4VPS](https://www.time4vps.com/?affid=1643)
+**Rekomendasi VPS:**
+
+[![Time4VPS](http://i65.tinypic.com/2cfp1te.png)](https://www.time4vps.com/?affid=1643) [![Digital Ocean](http://i68.tinypic.com/122embb.png)](https://m.do.co/c/2fa14040d118) [![Vultr](http://i64.tinypic.com/2pzctts.png)](https://www.vultr.com/?ref=7830794-4F)
 
 Untuk menjalankan script secara background, silahkan buka terminal server dan ketik perintah sebagai berikut:
 
