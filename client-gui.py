@@ -4,7 +4,7 @@ import socket
 import json
 import threading
 
-HOST = 'vps.komputronika.com'  # Alamat socket server
+HOST = 'socket.komputronika.com'  # Alamat socket server
 PORT = 4444                    # Port server
 
 class SocketThread (threading.Thread):
@@ -17,13 +17,19 @@ class SocketThread (threading.Thread):
         self.update()
 
     def update(self):
-        while True:    
-            data = Server.recv(2048)
-            lines = data.splitlines()
+        while True:  
+            try:  
+                data = Server.recv(2048)
+                lines = data.splitlines()
+            except:
+                #print "Gagal membaca socket"
+                wx.MessageBox('Gagal membaca socket', 'Error', wx.OK | wx.ICON_ERROR)
+                break    
+            
             try:
                 for i in range(0, len(lines)):
                     data = json.loads( lines[i].decode('UTF-8') )
-                    self.windows.text.SetLabel( data["data"] )
+                    wx.CallAfter(self.windows.text.SetLabel, data["data"])
             except:
                 break
 
@@ -66,12 +72,16 @@ class MainForm(wx.Frame):
  
 # Run the program
 if __name__ == "__main__":
-
-    Server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    Server.connect((HOST, PORT))
-    Server.sendall('{"action":"sub","topic":"demo"}\n'.encode('UTF-8'))
-    Server.sendall('{"action":"pub","topic":"demo","data":"Test python"}\n'.encode('UTF-8'))
+    try:
+        Server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        Server.connect((HOST, PORT))
+        Server.sendall('{"action":"sub","topic":"demo"}\n'.encode('UTF-8'))
+        Server.sendall('{"action":"pub","topic":"demo","data":"Test python"}\n'.encode('UTF-8'))
+    except:
+        print "Tidak dapat terhubung dengan server: "+HOST+":"+PORT
 
     App = wx.App()
     MainForm().Show()
+    MainForm().Centre()
     App.MainLoop()
+    return True
