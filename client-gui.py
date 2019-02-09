@@ -5,7 +5,7 @@ import json
 import threading
 
 HOST = 'socket.komputronika.com'  # Alamat socket server
-PORT = 4444                    # Port server
+PORT = 4444                       # Port server
 
 class SocketThread (threading.Thread):
     def __init__(self, windows):
@@ -19,19 +19,20 @@ class SocketThread (threading.Thread):
     def update(self):
         while True:  
             try:  
-                data = Server.recv(2048)
+                data = Server.recv(1024)
                 lines = data.splitlines()
             except:
-                #print "Gagal membaca socket"
                 wx.MessageBox('Gagal membaca socket', 'Error', wx.OK | wx.ICON_ERROR)
                 break    
             
             try:
                 for i in range(0, len(lines)):
                     data = json.loads( lines[i].decode('UTF-8') )
-                    wx.CallAfter(self.windows.text.SetLabel, data["data"])
+                    wx.CallAfter(self.windows.text.SetLabel, 
+                        "Suhu: "+unicode(data["data"]["suhu"])+
+                        ", Kelembaban: "+unicode(data["data"]["kelembaban"])) 
             except:
-                break
+                raise SystemExit
 
             time.sleep(0.500)
 
@@ -42,6 +43,7 @@ class MainForm(wx.Frame):
 
         self.InitUI()
         self.thread1 = SocketThread(self)
+        self.start = False
 
     def InitUI(self):
       
@@ -64,24 +66,25 @@ class MainForm(wx.Frame):
         panel.SetSizerAndFit(sizer)   
  
     def OnToggle(self, event):  
-        self.thread1.start()      
+        if self.start==False:
+            self.thread1.start()      
+            self.start=True
 
     def OnClose(self, event):
         Server.Close();
         self.Destroy()  
  
-# Run the program
+# Program utama
 if __name__ == "__main__":
     try:
         Server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         Server.connect((HOST, PORT))
         Server.sendall('{"action":"sub","topic":"demo"}\n'.encode('UTF-8'))
-        Server.sendall('{"action":"pub","topic":"demo","data":"Test python"}\n'.encode('UTF-8'))
     except:
         print "Tidak dapat terhubung dengan server: "+HOST+":"+PORT
+        raise SystemExit
 
     App = wx.App()
     MainForm().Show()
     MainForm().Centre()
     App.MainLoop()
-    return True

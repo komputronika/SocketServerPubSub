@@ -1,20 +1,20 @@
 <?php
 
-$host = "127.0.0.1";
+$host = "vps.komputronika.com";
 $port = 4444;
 
-$sub = '{"action":"sub","topic":"demo"}';
-$pub = '{"action":"pub","topic":"demo", "data":"Mantap bro"}';
+$sub1 = '{"action":"sub","topic":"demo"}';
+$sub2 = '{"action":"sub","topic":"time"}';
 
-$fp = stream_socket_client("tcp://$host:$port", $errno, $errstr, 30);
+$fp = stream_socket_client("tcp://$host:$port", $errno, $errstr, 60);
 if (!$fp) {
     echo "$errstr ($errno)<br />\n";
 } else {
-    fwrite($fp, "$sub\n");
+    fwrite($fp, "$sub1\n");
     sleep(2);
-    fwrite($fp, "$pub\n");
+    fwrite($fp, "$sub2\n");
     while (!feof($fp)) {
-        echo fgets($fp, 1024);
+        echo fgets($fp, 2048);
     }
     fclose($fp);
 }

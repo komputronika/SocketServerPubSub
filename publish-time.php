@@ -1,11 +1,10 @@
 <?php
-$host = "socket.komputronika.com";
+$host = "127.0.0.1";
 $port = 4444;
 
 while (true) {
     $fp = @stream_socket_client("tcp://$host:$port", $errno, $errstr, 120);
     if ($fp) {
-        $time  = time();
         $error = false;
         while (!$error) {
             // Publish data demo untuk keperluan testing
@@ -13,7 +12,6 @@ while (true) {
             $demo_data["topic"]  = "time";
             $demo_data["data"]   = "Waktu sekarang: " . date("H:i:s");
             $status              = @fwrite($fp, json_encode($demo_data) . "\n");
-            $time                = time();
 
             if ($status === false) {
                 $error = true;
