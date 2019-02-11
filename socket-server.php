@@ -235,7 +235,7 @@ while(true)
 } // while(true...
 
 // Tutup socket 
-socket_close($server);
+fclose($server);
 
 
 /**
@@ -249,9 +249,8 @@ function publish($sockets, $topic, $data, &$sent) {
     // Untuk semua element pada variable $socket
     if (@count($sockets["$topic"])<1) return;
 
-    $n = 0;
     $sent = 0;
-    foreach($sockets["$topic"] as $sock) {
+    foreach($sockets["$topic"] as $key => $sock) {
         // Tulis data JSON ke resource socket 
         if ($sock["type"]=="tcp") {
             // Untuk socket normal, tidak ada header apapun
@@ -266,13 +265,16 @@ function publish($sockets, $topic, $data, &$sent) {
 
         // Bila gagal mengirim data ke client ini
         if ($status === false) {
+            // Pastikan socket tersebut di close
+            if (is_resource($sockets["$topic"][$key]["socket"])) {
+                fclose($sockets["$topic"][$key]["socket"]);
+            }
             // Hapus client dari daftar subscriber
-            unset($sockets["$topic"][$n]);
+            unset($sockets["$topic"][$key]);
         } else { 
             // Hitung jumlah real yang terkirim
             $sent++; 
         }
-        $n++;
     }
 
     // Return array subscriber yang sudah dibersihkan
