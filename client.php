@@ -1,6 +1,6 @@
 <?php
 
-$host = "vps.komputronika.com";
+$host = "172.104.49.134";
 $port = 4444;
 
 $sub1 = '{"action":"sub","topic":"demo"}';
